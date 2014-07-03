@@ -1,0 +1,8 @@
+#!/bin/bash
+
+## Failover pool details
+declare -r fo_pool_algo=jackpot
+declare -r fo_pool_url=stratum+tcp://jpc.hashatme.com:3333
+declare -r fo_pool_user=String.MINER01
+declare -r fo_pool_password=12345
+declare -r fo_pool_flags=-q

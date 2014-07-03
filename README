@@ -1,0 +1,13 @@
+ccManager v. 0.0.1-alpha
+
+	-Open config/config.conf file and set the important variables.
+
+	-cd into the ccManager directory and execute "./ccManager.sh" without the quotes.
+	
+	-DO NOT run ccMiner, this program runs the miner for you.
+	
+	-If you want email alerts, you must configure mailutils - see http://www.ubuntututorials.com/send-email-command-line-ubuntu/
+	
+	-visit http://www.coindiscussion.co.uk/forum/viewtopic.php?f=46&t=295 for support
+	
+	-String

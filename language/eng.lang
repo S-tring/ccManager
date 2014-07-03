@@ -1,0 +1,37 @@
+#!/bin/bash
+
+declare -r lang_author_details="by String (2014)"
+declare -r lang_creating_logfile_paths="creating new log file paths..."
+declare -r lang_session_runtime="Session runtime"
+declare -r lang_session_ends="Session ends"
+declare -r lang_total_runtime="Total runtime"
+declare -r lang_press_to_break="Press Ctrl-C to break"
+declare -r lang_session_ended_waiting="Session ended, waiting"
+declare -r lang_seconds="seconds"
+declare -r lang_finish="Finish"
+
+declare -r lang_starting_ccminer="Starting ccMiner"
+declare -r lang_start_aborted="ccMiner already running, start aborted"
+declare -r lang_stopping_ccminer="Stopping ccminer"
+
+declare -r lang_temp="Temp"
+declare -r lang_fan="Fan"
+declare -r lang_mem="Mem"
+
+declare -r lang_error_halted_unfixable="Mining halted due to unfixable error"
+declare -r lang_error_critical_alert="Miner Critical Alert"
+declare -r lang_error_alert="Miner Alert"
+declare -r lang_error_lost_gpu_warning="Lost GPU warning!"
+declare -r lang_error_lost_gpu_recover="ccMiner successfully recovered from lost GPU"
+declare -r lang_error_lost_gpu_no_longer_seen="can no longer be seen by nvdidia-smi."
+declare -r lang_error_mining_paused_for="Mining paused for"
+declare -r lang_error_due_to_lost_gpu="seconds due to lost GPU"
+declare -r lang_error_due_to_high_temp="seconds due to high GPU temperature"
+declare -r lang_error_due_to_suspected_crash_gpu="seconds due to suspected GPU/Driver crash"
+declare -r lang_error_ccminer_stopped_for="ccMiner stopped for"
+declare -r lang_error_low_temp_warning="Low Temp warning!"
+declare -r lang_error_high_temp_warning="High Temp warning!"
+declare -r lang_error_failover_activated="Failover activated"
+declare -r lang_error_ccminer_failover_activated="ccMiner Failover activated."
+declare -r lang_error_unexplained_restart="ccMiner restarted after unexplained halt."
+
