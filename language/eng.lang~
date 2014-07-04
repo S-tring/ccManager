@@ -1,6 +1,5 @@
 #!/bin/bash
 
-##
 declare -r lang_author_details="by String (2014)"
 declare -r lang_creating_logfile_paths="creating new log file paths..."
 declare -r lang_session_runtime="Session runtime"

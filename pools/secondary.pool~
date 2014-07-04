@@ -1,6 +1,5 @@
 #!/bin/bash
 
-##
 ## Failover pool details
 declare -r fo_pool_algo=jackpot
 declare -r fo_pool_url=stratum+tcp://jpc.hashatme.com:3333

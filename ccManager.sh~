@@ -1,9 +1,7 @@
 #!/bin/bash
 
 ##
-##
 ## Setup
-##
 ##
 declare -r ccManagerDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ## Sources

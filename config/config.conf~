@@ -2,7 +2,6 @@
 
 ##
 ##
-##
 ## The following values are crucial and must be correct if ccManager is to run correctly.
 ## 
 ## The value for [low_temp_limit] may have to change if you get failovers by mistake.

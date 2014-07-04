@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ##
+
 ## Pool details
 declare -r pool_algo=jackpot
 declare -r pool_url=stratum+tcp://erebor.dwarfpool.com:3352

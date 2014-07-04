@@ -1,8 +1,6 @@
 #!/bin/bash
 ##
-##
 ## Do NOT change anything in this config file
-##
 ##
 declare -r path_to_logfile_dir=$ccManagerDIR/logs
 declare -i lost_gpu=0

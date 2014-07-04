@@ -1,6 +1,5 @@
 #!/bin/bash
 
-##
 get_gpu_details()
 {
 	declare -i timenow=$(date "+%s")
