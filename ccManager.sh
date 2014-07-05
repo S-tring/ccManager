@@ -1,9 +1,7 @@
 #!/bin/bash
 
 ##
-##
 ## Setup
-##
 ##
 declare -r ccManagerDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ## Sources
@@ -13,18 +11,63 @@ source $ccManagerDIR/pools/secondary.pool
 source $ccManagerDIR/config/constants.conf
 source $ccManagerDIR/language/$system_lang.lang
 source $ccManagerDIR/includes/functions.inc
-source $ccManagerDIR/includes/monitor.inc       
+source $ccManagerDIR/includes/monitor.inc 
 ##
 ## Create the log file
 ##
-echo "$lang_creating_logfile_paths"
+echo "$lang_creating_logfile_paths..."
 create_log_file
 ##
-## Start ccMiner
+## Do initial validation scans...
 ##
-ENDSTAMP=$(reset_session)
+## Do we require email facilities?
+##
+if [ $send_email = true ];
+then
+	mailutils_installed=$(package_installed "mailutils")
+	if [ $mailutils_installed = true ];
+	then
+		log_to_file "$lang_mailutils_success..." true null true
+	else
+		while true;
+		do
+			read -p "$lang_error_mailutils" yn
+			case $yn in
+				[Yy]* ) echo "$lang_continuing..."; break;;
+				[Nn]* ) echo "$lang_exiting..."; exit;;
+				* ) echo "$lang_yes_or_no";;
+			esac
+		done
+	fi
+fi 
+##
+## Are our gpu's available?
+find_gpus
+##
+## Is ccMiner available?
+##
+
+## Set for primary pool
+if [ $pool_path_to_ccminer_dir = false ];
+then
+	pool_path_to_ccminer_dir=$path_to_ccminer_dir
+fi
+## Set for secondary pool
+if [ $fo_pool_path_to_ccminer_dir = false ];
+then
+	fo_pool_path_to_ccminer_dir=$path_to_ccminer_dir
+fi
+find_ccminer $path_to_ccminer_dir "$lang_error_default_ccminer_not_found" "$lang_default_ccminer_available"
+find_ccminer $pool_path_to_ccminer_dir "$lang_error_primary_ccminer_not_found" "$lang_primary_ccminer_available"
+find_ccminer $fo_pool_path_to_ccminer_dir "$lang_error_secondary_ccminer_not_found" "$lang_secondary_ccminer_available"
+
+## 
+## Validation checks complete...
+## ...Start ccMiner
+##
+##ENDSTAMP=$(reset_session)
 start_ccminer
-session_start=$(date "+%s")
+##session_start=$(date "+%s")
 ##
 ## Start monitoring
 ##
@@ -37,7 +80,7 @@ do
 	##
 	## Output some info
 	##
-	echo -e "\033[1;37;42mccManager $lang_author_details\033[0m"
+	echo -e "\033[1;37;42mccManager $lang_ccManager_ver $lang_author_details\033[0m"
 	log_to_file "$output_divider" true "log" true
 
 	if [ $failover = false ];
@@ -59,7 +102,11 @@ do
 	log_to_file "$lang_session_runtime: $run_time" true null true
 	log_to_file "$lang_session_ends: $outstanding_time" true null true
 	log_to_file "$lang_total_runtime: $total_runtime" true null true
-	log_to_file "$output_divider" true null true
+	if [ $switch_pools = true ];
+	then
+		log_to_file "$lang_pool_switches: $poolswitch_count" true null true
+	fi
+	log_to_file "$lang_failovers: $failover_count" true null true
 	##
 	## Grab GPU details
 	##
@@ -82,12 +129,40 @@ do
 		log_to_file "$lang_session_ended_waiting $wait_time $lang_seconds..." true null true
 		sleep $wait_time
 		##
+		## Are we switching pools?
+		## Only do this if we're not in failover, cos if we are we'll be switching anyway...
+		##
+		if [ $switch_pools = true ] && [ $current_pool_url = $pool_url ];
+		then
+			log_to_file "$lang_switching_pools..." true null true
+			
+			sw_pool_url=$fo_pool_url
+			sw_pool_algo=$fo_pool_algo
+			sw_pool_user=$fo_pool_user
+			sw_pool_password=$fo_pool_password
+			sw_pool_flags=$fo_pool_flags
+			
+			fo_pool_url=$pool_url
+			fo_pool_algo=$pool_algo
+			fo_pool_user=$pool_user
+			fo_pool_password=$pool_password
+			fo_pool_flags=$pool_flags
+			
+			pool_url=$sw_pool_url
+			pool_algo=$sw_pool_algo
+			pool_user=$sw_pool_user
+			pool_password=$sw_pool_password
+			pool_flags=$sw_pool_flags
+			
+			poolswitch_count=$((poolswitch_count+1))
+		fi
+		##
 		## Restart ccMiner
 		##
-		ENDSTAMP=$(reset_session)
+		##ENDSTAMP=$(reset_session)
 		failover=false
 		start_ccminer
-		session_start=$(date "+%s")
+		##session_start=$(date "+%s")
 		##
 		## Send confirmation by email?
 		##

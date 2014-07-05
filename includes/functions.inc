@@ -1,10 +1,23 @@
 #!/bin/bash
 
 ##
-##
 ## Setup functions
 ##
-function show_time () 
+package_installed()
+{
+	## ${1} - package name
+	local installed=false
+	
+	dpkg-query -Wf'${db:Status-abbrev}' "${1}" 2>/dev/null | grep -q '^i'
+	
+	if dpkg-query -Wf'${db:Status-abbrev}' "${1}" 2>/dev/null | grep -q '^i'; 
+	then
+	    installed=true
+	fi
+	
+	echo $installed
+}
+show_time () 
 {
     num=$1
     min=0
@@ -111,16 +124,33 @@ log_to_file()
 	fi
 }
 
+find_ccminer()
+{
+	##$1=path_to_ccMiner
+	##$2=error language var
+	##$3=success language var
+	
+	if [ ! -f $1/ccminer ];
+	then
+		log_to_file "$2" true "error"
+		exit
+	else
+		log_to_file "$3..." true null true
+	fi
+}
+
 start_ccminer()
 {
 	##
 	## $1=failover status (boolean)
 	##
+	ENDSTAMP=$(reset_session)
+	session_start=$(date "+%s")
 	log_to_file "$lang_starting_ccminer..." true null true
 	##
 	## Make sure all GPU's specified are available
 	##
-	
+	find_gpus
 	##
 	## Check that Our Hero isn't working already
 	##
@@ -130,10 +160,12 @@ start_ccminer()
 	else
 		if [ "$1" = true ] && [ $failover = false ];
 		then
-			gnome-terminal -x $path_to_ccminer_dir/ccminer -a $fo_pool_algo -o $fo_pool_url -u $fo_pool_user -p $fo_pool_password -d $pool_gpus $fo_pool_flags
+			find_ccminer $fo_pool_path_to_ccminer_dir "$lang_error_secondary_ccminer_not_found" "$lang_secondary_ccminer_allocated"
+			gnome-terminal -x $fo_pool_path_to_ccminer_dir/ccminer -a $fo_pool_algo -o $fo_pool_url -u $fo_pool_user -p $fo_pool_password -d $pool_gpus $fo_pool_flags
 			failover=true
 		else
-	    	gnome-terminal -x $path_to_ccminer_dir/ccminer -a $pool_algo -o $pool_url -u $pool_user -p $pool_password -d $pool_gpus $pool_flags
+			find_ccminer $pool_path_to_ccminer_dir "$lang_error_primary_ccminer_not_found" "$lang_primary_ccminer_allocated"
+	    	gnome-terminal -x $pool_path_to_ccminer_dir/ccminer -a $pool_algo -o $pool_url -u $pool_user -p $pool_password -d $pool_gpus $pool_flags
 	    	failover=false
 	    fi
 	fi
@@ -156,3 +188,43 @@ process_email()
 	fi
 }
 
+invoke_failover()
+{
+	failover_count=$((failover_count+1))
+	stop_ccminer
+	log_to_file "$lang_error_failover_activated..." true "error"
+	##
+	## Need to send email here
+	##
+	process_email "$lang_error_ccminer_failover_activated" "$lang_error_alert"
+	sleep 5
+}
+
+find_gpus()
+{
+	if [ ${#used_gpus[@]} -lt 1 ];
+	then
+		log_to_file "$lang_error_no_gpus $lang_error_check_config_settings" true "error"
+		exit
+	fi
+	for i in "${!used_gpus[@]}"
+	do 
+		if ! [ "${used_gpus[$i]}" -eq "${used_gpus[$i]}" >& /dev/null ];
+		then
+			log_to_file "$lang_error_invalid_gpu${used_gpus[$i]}. $lang_error_check_config_settings" true "error"
+			exit
+		else
+			##
+			## We got a numeric GPU, but is it valid?
+			## ... let's take the patient's temperature :-)
+			##
+			thermostat=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits --id=${used_gpus[$i]})
+			if ! [ "${thermostat}" -eq "${thermostat}" >& /dev/null ];
+			then
+				log_to_file "GPU #${used_gpus[$i]} $lang_error_does_not_exist $lang_error_check_config_settings" true "error"
+				exit
+			fi
+		fi
+	done 
+	log_to_file "$lang_gpus_available..." true null true
+}

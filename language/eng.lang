@@ -1,8 +1,11 @@
 #!/bin/bash
 
-##
+cr=`echo $'\n.'`
+cr=${cr%.}
+
+declare -r lang_ccManager_ver="0.0.2-alpha"
 declare -r lang_author_details="by String (2014)"
-declare -r lang_creating_logfile_paths="creating new log file paths..."
+declare -r lang_creating_logfile_paths="creating new log file paths"
 declare -r lang_session_runtime="Session runtime"
 declare -r lang_session_ends="Session ends"
 declare -r lang_total_runtime="Total runtime"
@@ -10,6 +13,15 @@ declare -r lang_press_to_break="Press Ctrl-C to break"
 declare -r lang_session_ended_waiting="Session ended, waiting"
 declare -r lang_seconds="seconds"
 declare -r lang_finish="Finish"
+declare -r lang_continuing="Continuing"
+declare -r lang_exiting="Exiting"
+declare -r lang_yes_or_no="Please answer yes or no."
+declare -r lang_gpus_available="Selected GPU's confirmed as available"
+declare -r lang_default_ccminer_available="Default path to ccMiner confirmed as available"
+declare -r lang_primary_ccminer_available="Primary pool path to ccMiner set and confirmed as available"
+declare -r lang_secondary_ccminer_available="Secondary pool path to ccMiner set and confirmed as available"
+declare -r lang_primary_ccminer_allocated="Primary pool path to ccMiner allocated"
+declare -r lang_secondary_ccminer_allocated="Secondary pool path to ccMiner allocated"
 
 declare -r lang_starting_ccminer="Starting ccMiner"
 declare -r lang_start_aborted="ccMiner already running, start aborted"
@@ -18,6 +30,10 @@ declare -r lang_stopping_ccminer="Stopping ccminer"
 declare -r lang_temp="Temp"
 declare -r lang_fan="Fan"
 declare -r lang_mem="Mem"
+
+declare -r lang_failovers="Failovers"
+declare -r lang_pool_switches="Pool switches"
+declare -r lang_switching_pools="Switching pools"
 
 declare -r lang_error_halted_unfixable="Mining halted due to unfixable error"
 declare -r lang_error_critical_alert="Miner Critical Alert"
@@ -35,4 +51,15 @@ declare -r lang_error_high_temp_warning="High Temp warning!"
 declare -r lang_error_failover_activated="Failover activated"
 declare -r lang_error_ccminer_failover_activated="ccMiner Failover activated."
 declare -r lang_error_unexplained_restart="ccMiner restarted after unexplained halt."
+declare -r lang_error_invalid_gpu="Configuration setting is invalid for GPU #"
+declare -r lang_error_check_config_settings="Please check configuration settings."
+declare -r lang_error_no_gpus="You haven't specified any GPU(s) to mine with!"
+declare -r lang_error_does_not_exist="does not exist!"
+
+declare -r lang_error_mailutils="$cr The send_email option in file config/config.conf is set to 'true', but mailutils is not installed on your system. The email facility in this program is tested on mailutils only. If you continue, you may receive errors.$cr $cr Are you happy to continue?$cr $cr >"
+declare -r lang_mailutils_success="Mailutils found"
+
+declare -r lang_error_default_ccminer_not_found="Default path to ccMiner not found! Please check configuration settings."
+declare -r lang_error_primary_ccminer_not_found="Primary pool path to ccMiner not found! Please check pool configuration settings."
+declare -r lang_error_secondary_ccminer_not_found="Secondary pool path to ccMiner not found! Please check pool configuration settings."
 

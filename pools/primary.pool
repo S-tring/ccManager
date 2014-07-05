@@ -1,9 +1,12 @@
 #!/bin/bash
 
-##
+## Change the following line from "false" to the required path, if you want this pool to use a different ccMiner than the default set in config.conf
+
+declare pool_path_to_ccminer_dir=false
+
 ## Pool details
-declare -r pool_algo=jackpot
-declare -r pool_url=stratum+tcp://erebor.dwarfpool.com:3352
-declare -r pool_user=JXmV69c2hx67QafKgSqBNDF51ZzkcqLnV5
-declare -r pool_password=garryhughes@gmail.com
-declare -r pool_flags=-q
+declare pool_algo=jackpot
+declare pool_url=stratum+tcp://erebor.dwarfpool.com:3352
+declare pool_user=JXmV69c2hx67QafKgSqBNDF51ZzkcqLnV5
+declare pool_password=x
+declare pool_flags=-q

@@ -1,13 +1,21 @@
-	ccManager release 0.0.1-a (July 4th 2014) - "Maiden Voyage..."
+##################################################################
+##################################################################
+##
+##	ccManager v0.0.2-alpha (04/07/2014) - "Evolution in progress"
+##
+##################################################################
+##################################################################
 
-	-Open config/config.conf file and set the important variables.
 
-	-cd into the ccManager directory and execute "./ccManager.sh" without the quotes.
+
+Open config/config.conf file and set the important variables.
+
+cd into the ccManager directory and execute "./ccManager.sh" without the quotes.
 	
-	-DO NOT run ccMiner, this program runs the miner for you.
+DO NOT run ccMiner, this program runs the miner for you.
 	
-	-If you want email alerts, you must configure mailutils - see http://www.ubuntututorials.com/send-email-command-line-ubuntu/
+If you want email alerts, you must configure mailutils - see http://www.ubuntututorials.com/send-email-command-line-ubuntu/
 	
-	-visit http://www.coindiscussion.co.uk/forum/viewtopic.php?f=46&t=295 for support
+visit http://www.coindiscussion.co.uk/forum/viewtopic.php?f=46&t=295 for support
 	
-	-String
+-String

@@ -1,2 +1,6 @@
 ccManager
 =========
+
+A facility to manage mining with ccMiner.
+
+Get ccMiner here : https://github.com/cbuchner1/ccminer/releases

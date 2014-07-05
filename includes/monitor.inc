@@ -1,6 +1,5 @@
 #!/bin/bash
 
-##
 get_gpu_details()
 {
 	declare -i timenow=$(date "+%s")
@@ -50,9 +49,9 @@ get_gpu_details()
 			
 			if [ $lost_gpu -lt 2 ];
 			then
-				ENDSTAMP=$(reset_session)
+				##ENDSTAMP=$(reset_session)
 				start_ccminer
-				session_start=$(date "+%s")
+				##session_start=$(date "+%s")
 			fi
 			break
 			
@@ -80,9 +79,9 @@ get_gpu_details()
 			##
 			process_email "$lang_error_mining_paused_for $high_temp_wait $lang_error_due_to_high_temp..." "$lang_error_alert"
 			sleep $high_temp_wait
-			ENDSTAMP=$(reset_session)
+			##ENDSTAMP=$(reset_session)
 			start_ccminer
-			session_start=$(date "+%s")
+			##session_start=$(date "+%s")
 			high_temp_triggered=true
 			break				
 		fi
@@ -128,9 +127,9 @@ get_gpu_details()
 				##
 				process_email "$lang_error_mining_paused_for $crash_wait_time $lang_error_due_to_suspected_crash_gpu" "$lang_error_alert"
 				sleep $crash_wait_time
-				ENDSTAMP=$(reset_session)
+				##ENDSTAMP=$(reset_session)
 				start_ccminer
-				session_start=$(date "+%s")
+				##session_start=$(date "+%s")
 				lowtemp_time=0
 				##log_to_file "Not all GPU's are affected" true
 				## Need to figure out how to remember this happened, we might just want to stop mining altogether after too many resets.
@@ -146,25 +145,27 @@ get_gpu_details()
 					## ccMiner confirmed as running...
 					##
 					## Invoke failover.
-					stop_ccminer
-					log_to_file "$lang_error_failover_activated..." true "error"
+					##stop_ccminer
+					##log_to_file "$lang_error_failover_activated..." true "error"
 					##
 					## Need to send email here
 					##
-					process_email "$lang_error_ccminer_failover_activated" "$lang_error_alert"
-					sleep 5
-					ENDSTAMP=$(reset_session)
+					##process_email "$lang_error_ccminer_failover_activated" "$lang_error_alert"
+					##sleep 5
+					invoke_failover
+					
+					##ENDSTAMP=$(reset_session)
 					start_ccminer true
-					session_start=$(date "+%s")
+					##session_start=$(date "+%s")
 					lowtemp_time=0
 				else
 					##
 					## ccMiner not running...
 					##
 					log_to_file "$lang_error_unexplained_restart..." true "error"
-					ENDSTAMP=$(reset_session)
+					##ENDSTAMP=$(reset_session)
 					start_ccminer
-					session_start=$(date "+%s")
+					##session_start=$(date "+%s")
 					lowtemp_time=0
 				fi
 				
