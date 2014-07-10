@@ -1,22 +1,30 @@
 ##################################################################
 ##################################################################
 ##
-##	ccManager v0.0.2-alpha (04/07/2014) - "Evolution in progress"
+##	ccManager v0.0.3-alpha (10/07/2014) - "Beta in sight..."
+##	- String
 ##
 ##################################################################
 ##################################################################
-
-v0.0.2-alpha
-	- [NEW] Ability to auto-switch pools at the end of each session
-	- [NEW] Ability to set different version of ccMiner for each pool
-	- [NEW] ccManager version shown in terminal
-	- [NEW] Validate crucial configurations and prompt with error if required
-	- [NEW] Show number of failovers in terminal output
-	- [NEW] Show number of pool switches in terminal output
-	- [FIX] Bug fixes
-
-
-------------------------------------------------------------------
-
-v0.0.1-alpha
-	- Intital release
+##	
+##	v0.0.3-alpha
+##		- [CHG] Failover count only shows if there have been failovers
+##		- [CHG] Updated Readme with additional information
+##		- [NEW] Used miner now shown in terminal
+##		- [NEW] Error count now shown in terminal
+##		- [FIX] Bug fixes
+##	
+##	v0.0.2-alpha
+##		- [NEW] Ability to auto-switch pools at the end of each session
+##		- [NEW] Ability to set different version of ccMiner for each pool
+##		- [NEW] ccManager version shown in terminal
+##		- [NEW] Validate crucial configurations and prompt with error if required
+##		- [NEW] Show number of failovers in terminal output
+##		- [NEW] Show number of pool switches in terminal output
+##		- [FIX] Bug fixes
+##	
+##	v0.0.1-alpha
+##		- Intital release
+##
+##################################################################
+##################################################################

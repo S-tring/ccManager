@@ -1,5 +1,14 @@
 #!/bin/bash
 
+##################################################################
+##################################################################
+##
+##	ccManager v0.0.3-alpha (10/07/2014) - "Beta in sight..."
+##	- String
+##
+##################################################################
+##################################################################
+
 ##
 ## Setup functions
 ##
@@ -102,6 +111,7 @@ log_to_file()
 	if [ "$3" = "error" ]; 
 	then
 		this_log_file=$error_log_file
+		error_count=$((error_count+1))
 	fi
 	##
 	## Write the log to file
@@ -161,11 +171,13 @@ start_ccminer()
 		if [ "$1" = true ] && [ $failover = false ];
 		then
 			find_ccminer $fo_pool_path_to_ccminer_dir "$lang_error_secondary_ccminer_not_found" "$lang_secondary_ccminer_allocated"
-			gnome-terminal -x $fo_pool_path_to_ccminer_dir/ccminer -a $fo_pool_algo -o $fo_pool_url -u $fo_pool_user -p $fo_pool_password -d $pool_gpus $fo_pool_flags
+			current_miner=$fo_pool_path_to_ccminer_dir/ccminer
+			gnome-terminal -x $current_miner -a $fo_pool_algo -o $fo_pool_url -u $fo_pool_user -p $fo_pool_password -d $pool_gpus $fo_pool_flags
 			failover=true
 		else
 			find_ccminer $pool_path_to_ccminer_dir "$lang_error_primary_ccminer_not_found" "$lang_primary_ccminer_allocated"
-	    	gnome-terminal -x $pool_path_to_ccminer_dir/ccminer -a $pool_algo -o $pool_url -u $pool_user -p $pool_password -d $pool_gpus $pool_flags
+			current_miner=$pool_path_to_ccminer_dir/ccminer
+	    	gnome-terminal -x $current_miner -a $pool_algo -o $pool_url -u $pool_user -p $pool_password -d $pool_gpus $pool_flags
 	    	failover=false
 	    fi
 	fi
@@ -175,6 +187,7 @@ stop_ccminer()
 {
 	log_to_file "$lang_stopping_ccminer..." true
 	pkill ccminer
+	current_miner=""
 }
 
 process_email()

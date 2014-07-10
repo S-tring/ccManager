@@ -1,5 +1,14 @@
 #!/bin/bash
 
+##################################################################
+##################################################################
+##
+##	ccManager v0.0.3-alpha (10/07/2014) - "Beta in sight..."
+##	- String
+##
+##################################################################
+##################################################################
+
 ## Change the following line from "false" to the required path, if you want this pool to use a different ccMiner than the default set in config.conf
 
 declare fo_pool_path_to_ccminer_dir=false

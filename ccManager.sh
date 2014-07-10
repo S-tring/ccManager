@@ -1,17 +1,38 @@
 #!/bin/bash
 
+##################################################################
+##################################################################
 ##
-## Setup
+##	ccManager v0.0.3-alpha (10/07/2014) - "Beta in sight..."
+##	- String
+##
+##################################################################
+##################################################################
+
+##
+## Set some vars
 ##
 declare -r ccManagerDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-## Sources
+
+source $ccManagerDIR/config/constants.conf
+
+declare -i lost_gpu=0
+declare -i lowtemp_time=0
+declare -i failover_count=0
+declare -i poolswitch_count=0
+declare current_miner=""
+declare error_count=0
+declare failover=false
+
+## Additional sources
 source $ccManagerDIR/config/config.conf
 source $ccManagerDIR/pools/primary.pool
 source $ccManagerDIR/pools/secondary.pool
-source $ccManagerDIR/config/constants.conf
 source $ccManagerDIR/language/$system_lang.lang
 source $ccManagerDIR/includes/functions.inc
 source $ccManagerDIR/includes/monitor.inc 
+
+IFS=', ' read -a used_gpus <<< "$pool_gpus"
 ##
 ## Create the log file
 ##
@@ -83,6 +104,11 @@ do
 	echo -e "\033[1;37;42mccManager $lang_ccManager_ver $lang_author_details\033[0m"
 	log_to_file "$output_divider" true "log" true
 
+	if [ ${#current_miner} -gt 0 ];
+	then
+		log_to_file "$lang_miner: $current_miner" true null true
+	fi
+	
 	if [ $failover = false ];
 	then
 		current_pool_url=$pool_url
@@ -90,7 +116,7 @@ do
 		current_pool_url=$fo_pool_url
 	fi
 
-	log_to_file "$current_pool_url" true null true
+	log_to_file "$lang_pool: $current_pool_url" true null true
 	
 	run_time=$((CURRENTTIMESTAMP-session_start))
 	run_time=$(show_time $run_time)
@@ -102,11 +128,29 @@ do
 	log_to_file "$lang_session_runtime: $run_time" true null true
 	log_to_file "$lang_session_ends: $outstanding_time" true null true
 	log_to_file "$lang_total_runtime: $total_runtime" true null true
+	##
+	## Show pool switches?
+	##
 	if [ $switch_pools = true ];
 	then
-		log_to_file "$lang_pool_switches: $poolswitch_count" true null true
+		log_to_file "\033[1;33m$lang_pool_switches: $poolswitch_count\033[0m" true null true
 	fi
-	log_to_file "$lang_failovers: $failover_count" true null true
+	##
+	## Show Failovers ??
+	##
+	if [ $failover_count -gt 0 ];
+	then
+		log_to_file "\033[1;33m$lang_failovers: $failover_count\033[0m" true null true
+	fi
+	##
+	## Show error count?
+	##
+	if [ $error_count -gt 0 ];
+	then
+		echo -e "\033[1;37;41m$lang_errors: $error_count\033[0m"
+	else
+		echo -e "\033[1;37;42m...$lang_no_errors...\033[0m"
+	fi
 	##
 	## Grab GPU details
 	##

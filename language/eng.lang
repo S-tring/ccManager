@@ -1,10 +1,21 @@
 #!/bin/bash
 
+##################################################################
+##################################################################
+##
+##	ccManager v0.0.3-alpha (10/07/2014) - "Beta in sight..."
+##	- String
+##
+##################################################################
+##################################################################
+
 cr=`echo $'\n.'`
 cr=${cr%.}
 
-declare -r lang_ccManager_ver="0.0.2-alpha"
+declare -r lang_ccManager_ver="0.0.3-alpha"
 declare -r lang_author_details="by String (2014)"
+declare -r lang_pool="Pool"
+declare -r lang_miner="Miner"
 declare -r lang_creating_logfile_paths="creating new log file paths"
 declare -r lang_session_runtime="Session runtime"
 declare -r lang_session_ends="Session ends"
@@ -35,6 +46,8 @@ declare -r lang_failovers="Failovers"
 declare -r lang_pool_switches="Pool switches"
 declare -r lang_switching_pools="Switching pools"
 
+declare -r lang_errors="Errors"
+declare -r lang_no_errors="No errors encountered"
 declare -r lang_error_halted_unfixable="Mining halted due to unfixable error"
 declare -r lang_error_critical_alert="Miner Critical Alert"
 declare -r lang_error_alert="Miner Alert"

@@ -1,21 +1,53 @@
 ##################################################################
 ##################################################################
 ##
-##	ccManager v0.0.2-alpha (04/07/2014) - "Evolution in progress"
+##	ccManager v0.0.3-alpha (10/07/2014) - "Beta in sight..."
+##	- String
 ##
 ##################################################################
 ##################################################################
+##	
+##################################################################
+##	This software is to be used in conjunction with ccMiner. Get the original miner :
+##	
+##	https://github.com/cbuchner1/ccminer/releases
+##	
+##	Other miners are available. See the forum thread :
+##	
+##	https://bitcointalk.org/index.php?topic=167229.0
+##################################################################
+
+ccManager will automatically run ccMiner.
+
+mailutils will require to be installed and setup if you want to take advantage of email alerts.
+
+http://mailutils.org/
+http://www.ubuntututorials.com/send-email-command-line-ubuntu/
 
 
+Open config/config.conf file and set the important variables...
 
-Open config/config.conf file and set the important variables.
+You must set the path to your ccMiner :
 
-cd into the ccManager directory and execute "./ccManager.sh" without the quotes.
+	- declare path_to_ccminer_dir=~/your/path/to/ccminer_folder
+
+You must tell ccManager which GPU's to use : 
+
+	- declare -r pool_gpus=0
+
+You must tell ccManager which pools to use for primary and secondary.
+When you have your configurations set, cd into the ccManager directory and execute "./ccManager.sh" without the quotes.
 	
 DO NOT run ccMiner, this program runs the miner for you.
 	
-If you want email alerts, you must configure mailutils - see http://www.ubuntututorials.com/send-email-command-line-ubuntu/
-	
-visit http://www.coindiscussion.co.uk/forum/viewtopic.php?f=46&t=295 for support
-	
--String
+If you want email alerts, you must configure mailutils - see above!
+
+##################################################################
+##################################################################
+##		
+##	visit http://www.coindiscussion.co.uk/forum/viewtopic.php?f=46&t=295 for support
+##		
+##	-String
+##	
+##################################################################
+##################################################################
